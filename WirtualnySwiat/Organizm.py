@@ -1,21 +1,24 @@
 from abc import ABC, abstractmethod
+from random import randint
+
+from WirtualnySwiat.Wspolrzedne import Wspolrzedne
 
 
 class Organizm(ABC):
 
     def __init__(self, srodowisko, miejsce, sila=None, wiek=None):
         super().__init__()
-        self.__swiat = srodowisko
-        self.__polozenie = miejsce
-        self.__czyZyje = True
-        self.__czyRozmnozylSie = False
+        self._swiat = srodowisko
+        self._polozenie = miejsce
+        self._czyZyje = True
+        self._czyRozmnozylSie = False
         if wiek is None:
-            self.__wiek = self.__swiat.get_tura()
+            self._wiek = self._swiat.get_tura()
         else:
-            self.__wiek = wiek
-        self.__sila = sila
-        self.__inicjatywa = None        # do nadpisania
-        self.__typ = None               # do nadpisania
+            self._wiek = wiek
+        self._sila = sila
+        self._inicjatywa = None        # do nadpisania
+        self._typ = None               # do nadpisania
 
     @abstractmethod
     def akcja(self):
@@ -30,37 +33,37 @@ class Organizm(ABC):
         pass
 
     def get_sila(self):
-        return self.__sila
+        return self._sila
 
     def zwieksz_sile_o(self, wartosc):
-        self.__sila += wartosc
+        self._sila += wartosc
 
     def get_inicjatywa(self):
-        return self.__inicjatywa
+        return self._inicjatywa
 
     def get_wiek(self):
-        return self.__wiek
+        return self._wiek
 
     def get_polozenie(self):
-        return self.__polozenie
+        return self._polozenie
 
     def set_polozenie(self, nowe):
-        self.__polozenie = nowe
+        self._polozenie = nowe
 
     def get_typ(self):
-        return self.__typ
+        return self._typ
 
     def get_czy_zyje(self):
-        return self.__czyZyje
+        return self._czyZyje
 
     def set_czy_zyje(self, stan):
-        self.__czyZyje = stan
+        self._czyZyje = stan
 
     def get_czy_rozmnozyl_sie(self):
-        return self.__czyRozmnozylSie
+        return self._czyRozmnozylSie
 
     def set_czy_rozmnozyl_sie(self, stan):
-        self.__czyRozmnozylSie = stan
+        self._czyRozmnozylSie = stan
 
     def czy_odbil_atak(self, atakujacy):
         return False
@@ -69,4 +72,40 @@ class Organizm(ABC):
         return False
 
     def losuj_polozenie(self):
-        """TODO"""
+        x_new = self._polozenie.x
+        y_new = self._polozenie.y
+        r = randint(0, 8)
+        if r == 0:
+            if self._polozenie.x > 0 and self._polozenie.y > 0:
+                x_new -= 1
+                y_new -= 1
+        elif r == 1:
+            if self._polozenie.x > 0:
+                x_new -= 1
+        elif r == 2:
+            if self._polozenie.x > 0 and self._polozenie.y < self._swiat.get_cols() - 1:
+                x_new -= 1
+                y_new += 1
+        elif r == 3:
+            if self._polozenie.y > 0:
+                y_new -= 1
+        elif r == 4:
+            if self._polozenie.y < self._swiat.get_cols() - 1:
+                y_new += 1
+        elif r == 5:
+            if self._polozenie.x < self._swiat.get_rows() - 1 and self._polozenie.y > 0:
+                x_new += 1
+                y_new -= 1
+        elif r == 6:
+            if self._polozenie.x < self._swiat.get_rows() - 1:
+                x_new += 1
+        elif r == 7:
+            if self._polozenie.x < self._swiat.get_rows() - 1 and self._polozenie.y < self._swiat.get_cols() - 1:
+                x_new += 1
+                y_new += 1
+        else:
+            if self._polozenie.x > 0 and self._polozenie.y > 0:
+                x_new -= 1
+                y_new -= 1
+
+        return Wspolrzedne(x_new, y_new)

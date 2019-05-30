@@ -42,6 +42,10 @@ class Swiat(object):
     def dodaj_komunikat(self, info):
         self.__komunikaty.append(info)
 
+    def dodaj_organizm(self, typ, miejsce):
+        """TODO"""
+        pass
+
     def dodaj_wlasny_organizm(self, typ, miejsce):
         org = {
             "wilk": print("wilk"),  #TODO
