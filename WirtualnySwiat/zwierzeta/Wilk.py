@@ -12,4 +12,5 @@ class Wilk(Zwierze):
         self._typ = Rodzaj.wilk
 
     def rysowanie(self):
-        print("wilk")
+        print("wilk, inicjatywa: ", str(self.get_inicjatywa()), " wiek: ", str(self.get_wiek()))
+

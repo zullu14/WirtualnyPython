@@ -12,4 +12,5 @@ class Owca(Zwierze):
         self._typ = Rodzaj.owca
 
     def rysowanie(self):
-        print("owca na pozycji", self.get_polozenie().x, ",", self.get_polozenie().y)
+        print("owca, inicjatywa: ", str(self.get_inicjatywa()), " wiek: ", str(self.get_wiek()))
+

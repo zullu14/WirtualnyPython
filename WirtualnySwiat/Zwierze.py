@@ -44,12 +44,12 @@ class Zwierze(Organizm):
             if drugi.czy_uciekl(self):
                 return
             elif self._sila >= drugi.get_sila():
-                self._swiat.dodaj_komunikat(self._typ + " zabija " + drugi.get_typ + " na pozycji " + self._polozenie.x
-                                            + "," + self._polozenie.y + ". ")
+                self._swiat.dodaj_komunikat(self.get_typ().name + " zabija " + drugi.get_typ().name + " na pozycji " +
+                                            str(self._polozenie.x) + "," + str(self._polozenie.y) + ". ")
                 drugi.set_czy_zyje(False)
             else:
-                self._swiat.dodaj_komunikat(drugi.get_typ + " zabija " + self._typ + " na pozycji " + self._polozenie.x
-                                            + "," + self._polozenie.y + ". ")
+                self._swiat.dodaj_komunikat(drugi.get_typ().name + " zabija " + self.get_typ().name + " na pozycji " +
+                                            str(self._polozenie.x) + "," + str(self._polozenie.y) + ". ")
                 self.set_czy_zyje(False)
 
     @abstractmethod

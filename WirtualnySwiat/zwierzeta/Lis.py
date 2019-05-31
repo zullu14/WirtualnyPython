@@ -27,4 +27,5 @@ class Lis(Zwierze):
                     self._polozenie = nowe_polozenie
 
     def rysowanie(self):
-        print("lis")
+        print("lis, inicjatywa: ", str(self.get_inicjatywa()), " wiek: ", str(self.get_wiek()))
+
