@@ -11,7 +11,7 @@ class Roslina(Organizm):
 
     def akcja(self):
         """Rozprzestrzenianie roślin"""
-        if randint(0, 20) == 0:
+        if randint(0, 19) == 0:
             zajete = False
             nowe_polozenie = self.losuj_polozenie()
             for org in self._swiat.get_nowe_organizmy():  # do sprawdzenia

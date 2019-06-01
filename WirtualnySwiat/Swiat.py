@@ -1,5 +1,10 @@
+from random import randint
+
 from WirtualnySwiat.Akcje import Akcje
 from WirtualnySwiat.Rodzaj import Rodzaj
+from WirtualnySwiat.Roslina import Roslina
+from WirtualnySwiat.Wspolrzedne import Wspolrzedne
+from WirtualnySwiat.Zwierze import Zwierze
 from WirtualnySwiat.zwierzeta.Lis import Lis
 from WirtualnySwiat.zwierzeta.Owca import Owca
 from WirtualnySwiat.zwierzeta.Wilk import Wilk
@@ -16,6 +21,8 @@ class Swiat(object):
         self.__noweOrganizmy = []
         self.__komunikaty = []
         self.__kierunek = Akcje.stoj
+        self.stworz_swiat()
+        # TODO inicjalizacja okna graficznego
 
     def get_rows(self):
         return self.__rows
@@ -43,7 +50,29 @@ class Swiat(object):
 
     def stworz_swiat(self):
         # TODO
-        pass
+        populacja = self.__rows * self.__cols / 14
+        x = randint(0, self.__rows - 1)
+        y = randint(0, self.__cols - 1)
+        zajete = False
+
+        # TODO: stworz czlowieka i cyber-owce
+        i = 0
+        while i < populacja:
+            x = randint(0, self.__rows - 1)
+            y = randint(0, self.__cols - 1)
+            zajete = False
+            for org in self.__noweOrganizmy:
+                if org.get_polozenie().x == x and org.get_polozenie().y == y:
+                    zajete = True
+                    break
+            if not zajete:
+                r = randint(1, len(Rodzaj)-8)       # TODO zmień
+                self.dodaj_organizm(Rodzaj(r), Wspolrzedne(x, y))
+                i += 1
+
+        self.dodaj_nowe_organizmy()
+        self.rysuj_swiat()
+        self.__tura += 1
 
     def wykonaj_ture(self):
         self.__organizmy.sort(key=lambda org: org.get_wiek())
@@ -59,10 +88,10 @@ class Swiat(object):
         self.usun_organizmy()
 
         # następnie dodaj do listy organizmów wszystkie nowo narodzone
-        # TODO: dodaj nowe organizmy
+        self.dodaj_nowe_organizmy()
 
         # narysuj obecny stan świata wraz z komunikatami
-        # TODO: rysuj swiat
+        self.rysuj_swiat()
 
         # zerowanie pola kierunek, czyli ostatniego klikniętego klawisza
         self.__kierunek = Akcje.stoj
@@ -115,17 +144,49 @@ class Swiat(object):
         }.get(typ, Owca(self, miejsce))
         self.__organizmy.append(org)
 
+    def dodaj_nowe_organizmy(self):
+        """Rozmnażanie zwierząt/ rozprzestrzenianie roślin - umieszcza nowy organizm"""
+        for nowy_org in self.__noweOrganizmy:
+            zajete = False
+            for org in self.__organizmy:
+                if org.get_polozenie() == nowy_org.get_polozenie():
+                    zajete = True
+                    break
+            if not zajete:
+                if isinstance(nowy_org, Zwierze):
+                    self.dodaj_komunikat("Nowe zwierze: " + nowy_org.get_typ().name +
+                                         " rodzi sie na pozycji " + str(nowy_org.get_polozenie().x) + "," +
+                                         str(nowy_org.get_polozenie().y) + ". ")
+                elif isinstance(nowy_org, Roslina):
+                    self.dodaj_komunikat("Nowa roslina: " + nowy_org.get_typ().name +
+                                         " wyrasta na pozycji " + str(nowy_org.get_polozenie().x) + "," +
+                                         str(nowy_org.get_polozenie().y) + ". ")
+            else:           # jezeli miejsce zajęte, to nie powstanie tu nowy organizm
+                nowy_org.set_czy_zyje(False)
+        self.__noweOrganizmy = [org1 for org1 in self.__noweOrganizmy if org1.get_czy_zyje()]
+        self.__organizmy.extend(self.__noweOrganizmy)
+        self.__noweOrganizmy.clear()
+
     def usun_organizmy(self):
-        self.__organizmy = filter(lambda org: org.get_czy_zyje(), self.__organizmy)
+        self.__organizmy = [org for org in self.__organizmy if org.get_czy_zyje()]
 
     def rysuj_swiat(self):
         """TODO"""
+        for org in self.__organizmy:
+            org.rysowanie()
+        print()
+        for info in self.__komunikaty:
+            print(info)
+        print()
+        self.__komunikaty.clear()
 
     def zapisz_swiat(self, plik):
         """TODO"""
+        pass
 
     def wczytaj_swiat(self, plik):
         """TODO"""
+        pass
 
     """roboczo"""
     def __repr__(self):

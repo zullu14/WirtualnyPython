@@ -14,7 +14,7 @@ class Zolw(Zwierze):
         self._typ = Rodzaj.zolw
 
     def akcja(self):
-        if randint(0, 4) == 0:
+        if randint(0, 3) == 0:
             super().akcja()
 
     def czy_odbil_atak(self, atakujacy):

@@ -74,7 +74,7 @@ class Organizm(ABC):
     def losuj_polozenie(self):
         x_new = self._polozenie.x
         y_new = self._polozenie.y
-        r = randint(0, 8)
+        r = randint(0, 7)
         if r == 0:
             if self._polozenie.x > 0 and self._polozenie.y > 0:
                 x_new -= 1
