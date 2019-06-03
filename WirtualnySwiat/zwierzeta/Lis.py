@@ -26,6 +26,6 @@ class Lis(Zwierze):
                 if not zajete:
                     self._polozenie = nowe_polozenie
 
-    def rysowanie(self):
-        print("lis, inicjatywa: ", str(self.get_inicjatywa()), " wiek: ", str(self.get_wiek()))
-
+    def rysowanie(self, pole):
+        pole.setText("lis")
+        pole.setStyleSheet("background-color: rgb(255, 160, 16);")

@@ -1,14 +1,10 @@
-from random import randint
+import sys
 
-from WirtualnySwiat.Rodzaj import Rodzaj
+from PyQt5.QtWidgets import QApplication
+
 from WirtualnySwiat.Swiat import Swiat
-from WirtualnySwiat.Wspolrzedne import Wspolrzedne
-from WirtualnySwiat.zwierzeta.Owca import Owca
-from WirtualnySwiat.zwierzeta.Wilk import Wilk
-from WirtualnySwiat.zwierzeta.Zolw import Zolw
 
 if __name__ == "__main__":
+    app = QApplication(sys.argv)
     swiat = Swiat(10, 10)
-    while True:
-        input()
-        swiat.wykonaj_ture()
+    sys.exit(app.exec_())

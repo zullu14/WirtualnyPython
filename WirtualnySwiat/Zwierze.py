@@ -53,5 +53,5 @@ class Zwierze(Organizm):
                 self.set_czy_zyje(False)
 
     @abstractmethod
-    def rysowanie(self):
+    def rysowanie(self, pole):
         pass

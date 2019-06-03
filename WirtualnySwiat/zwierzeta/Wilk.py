@@ -11,6 +11,6 @@ class Wilk(Zwierze):
         self._inicjatywa = 5
         self._typ = Rodzaj.wilk
 
-    def rysowanie(self):
-        print("wilk, inicjatywa: ", str(self.get_inicjatywa()), " wiek: ", str(self.get_wiek()))
-
+    def rysowanie(self, pole):
+        pole.setText("wilk")
+        pole.setStyleSheet("background-color: rgb(70, 164, 230);")

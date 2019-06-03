@@ -5,6 +5,7 @@ from WirtualnySwiat.Rodzaj import Rodzaj
 from WirtualnySwiat.Roslina import Roslina
 from WirtualnySwiat.Wspolrzedne import Wspolrzedne
 from WirtualnySwiat.Zwierze import Zwierze
+from WirtualnySwiat.grafika.OknoSwiat import OknoSwiat
 from WirtualnySwiat.zwierzeta.Lis import Lis
 from WirtualnySwiat.zwierzeta.Owca import Owca
 from WirtualnySwiat.zwierzeta.Wilk import Wilk
@@ -21,8 +22,9 @@ class Swiat(object):
         self.__noweOrganizmy = []
         self.__komunikaty = []
         self.__kierunek = Akcje.stoj
+        self.__okno = OknoSwiat(self)
         self.stworz_swiat()
-        # TODO inicjalizacja okna graficznego
+        self.__okno.show()
 
     def get_rows(self):
         return self.__rows
@@ -172,12 +174,9 @@ class Swiat(object):
 
     def rysuj_swiat(self):
         """TODO"""
-        for org in self.__organizmy:
-            org.rysowanie()
-        print()
-        for info in self.__komunikaty:
-            print(info)
-        print()
+        self.__okno.rysuj_organizmy()
+        if self.__tura > 0:
+            self.__okno.ustaw_komunikaty()
         self.__komunikaty.clear()
 
     def zapisz_swiat(self, plik):

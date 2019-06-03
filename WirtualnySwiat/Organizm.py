@@ -29,7 +29,7 @@ class Organizm(ABC):
         pass
 
     @abstractmethod
-    def rysowanie(self):
+    def rysowanie(self, pole):
         pass
 
     def get_sila(self):

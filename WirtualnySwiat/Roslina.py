@@ -25,6 +25,6 @@ class Roslina(Organizm):
         pass
 
     @abstractmethod
-    def rysowanie(self):
+    def rysowanie(self, pole):
         pass
 

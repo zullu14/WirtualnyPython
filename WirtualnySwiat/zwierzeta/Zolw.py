@@ -25,5 +25,6 @@ class Zolw(Zwierze):
         else:
             return False
 
-    def rysowanie(self):
-        print("zolw, inicjatywa: ", str(self.get_inicjatywa()), " wiek: ", str(self.get_wiek()))
+    def rysowanie(self, pole):
+        pole.setText("zolw")
+        pole.setStyleSheet("background-color: rgb(185, 140, 17);")

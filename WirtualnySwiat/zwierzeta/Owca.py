@@ -11,6 +11,6 @@ class Owca(Zwierze):
         self._inicjatywa = 4
         self._typ = Rodzaj.owca
 
-    def rysowanie(self):
-        print("owca, inicjatywa: ", str(self.get_inicjatywa()), " wiek: ", str(self.get_wiek()))
-
+    def rysowanie(self, pole):
+        pole.setText("owca")
+        pole.setStyleSheet("background-color: rgb(200, 200, 200);")
