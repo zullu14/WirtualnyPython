@@ -1,6 +1,7 @@
 from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtWidgets import QWidget, QDesktopWidget, QVBoxLayout, QLabel, QGroupBox, QHBoxLayout, QPushButton
 
+from WirtualnySwiat.Akcje import Akcje
 from WirtualnySwiat.grafika.Plansza import Plansza
 
 
@@ -35,6 +36,7 @@ class OknoSwiat(QWidget):
         nowa_tura.setMaximumHeight(self.__wys/10)
         nowa_tura.setMaximumWidth(self.__szer/10)
         nowa_tura.clicked.connect(self.on_click_nowa_tura)
+        nowa_tura.setFocusPolicy(Qt.NoFocus)
 
         panel_komunikacji = QGroupBox()
         info_layout = QHBoxLayout()
@@ -68,3 +70,25 @@ class OknoSwiat(QWidget):
     @pyqtSlot()
     def on_click_nowa_tura(self):
         self.__swiat.wykonaj_ture()
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            self.close()
+        elif event.key() == Qt.Key_Up:
+            self.__swiat.set_kierunek(Akcje.gora)
+            self.__swiat.wykonaj_ture()
+        elif event.key() == Qt.Key_Down:
+            self.__swiat.set_kierunek(Akcje.dol)
+            self.__swiat.wykonaj_ture()
+        elif event.key() == Qt.Key_Right:
+            self.__swiat.set_kierunek(Akcje.prawo)
+            self.__swiat.wykonaj_ture()
+        elif event.key() == Qt.Key_Left:
+            self.__swiat.set_kierunek(Akcje.lewo)
+            self.__swiat.wykonaj_ture()
+        elif event.key() == Qt.Key_Space:
+            self.__swiat.set_kierunek(Akcje.spacja)
+            self.__swiat.wykonaj_ture()
+        else:
+            pass
+

@@ -6,5 +6,5 @@ from WirtualnySwiat.Swiat import Swiat
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    swiat = Swiat(10, 10)
+    swiat = Swiat(12, 12)
     sys.exit(app.exec_())

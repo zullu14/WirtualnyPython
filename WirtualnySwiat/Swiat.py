@@ -6,6 +6,14 @@ from WirtualnySwiat.Roslina import Roslina
 from WirtualnySwiat.Wspolrzedne import Wspolrzedne
 from WirtualnySwiat.Zwierze import Zwierze
 from WirtualnySwiat.grafika.OknoSwiat import OknoSwiat
+from WirtualnySwiat.rosliny.Guarana import Guarana
+from WirtualnySwiat.rosliny.Mlecz import Mlecz
+from WirtualnySwiat.rosliny.Sosnowski import Sosnowski
+from WirtualnySwiat.rosliny.Trawa import Trawa
+from WirtualnySwiat.rosliny.WilczeJagody import WilczeJagody
+from WirtualnySwiat.zwierzeta.Antylopa import Antylopa
+from WirtualnySwiat.zwierzeta.CyberOwca import CyberOwca
+from WirtualnySwiat.zwierzeta.Czlowiek import Czlowiek
 from WirtualnySwiat.zwierzeta.Lis import Lis
 from WirtualnySwiat.zwierzeta.Owca import Owca
 from WirtualnySwiat.zwierzeta.Wilk import Wilk
@@ -51,13 +59,26 @@ class Swiat(object):
         return self.__komunikaty
 
     def stworz_swiat(self):
-        # TODO
-        populacja = self.__rows * self.__cols / 14
+        populacja = self.__rows * self.__cols / 12
         x = randint(0, self.__rows - 1)
         y = randint(0, self.__cols - 1)
         zajete = False
 
-        # TODO: stworz czlowieka i cyber-owce
+        # stworz czlowieka i cyber-owce
+        self.dodaj_organizm(Rodzaj.czlowiek, Wspolrzedne(x, y))
+
+        while True:
+            x = randint(0, self.__rows - 1)
+            y = randint(0, self.__cols - 1)
+            zajete = False
+            for org in self.get_nowe_organizmy():
+                if org.get_polozenie().x == x and org.get_polozenie().y == y:
+                    zajete = True
+                    break
+            if not zajete:
+                self.dodaj_organizm(Rodzaj.cyberowca, Wspolrzedne(x, y))
+                break
+
         i = 0
         while i < populacja:
             x = randint(0, self.__rows - 1)
@@ -68,7 +89,7 @@ class Swiat(object):
                     zajete = True
                     break
             if not zajete:
-                r = randint(1, len(Rodzaj)-8)       # TODO zmień
+                r = randint(1, len(Rodzaj)-2)
                 self.dodaj_organizm(Rodzaj(r), Wspolrzedne(x, y))
                 i += 1
 
@@ -105,7 +126,6 @@ class Swiat(object):
         self.__komunikaty.append(info)
 
     def dodaj_organizm(self, typ, miejsce):
-        # TODO uzupełnić resztę organizmów
         org = None
         if typ is Rodzaj.wilk:
             org = Wilk(self, miejsce)
@@ -115,13 +135,28 @@ class Swiat(object):
             org = Zolw(self, miejsce)
         elif typ is Rodzaj.lis:
             org = Lis(self, miejsce)
+        elif typ is Rodzaj.antylopa:
+            org = Antylopa(self, miejsce)
+        elif typ is Rodzaj.trawa:
+            org = Trawa(self, miejsce)
+        elif typ is Rodzaj.mlecz:
+            org = Mlecz(self, miejsce)
+        elif typ is Rodzaj.guarana:
+            org = Guarana(self, miejsce)
+        elif typ is Rodzaj.jagody:
+            org = WilczeJagody(self, miejsce)
+        elif typ is Rodzaj.barszcz:
+            org = Sosnowski(self, miejsce)
+        elif typ is Rodzaj.czlowiek:
+            org = Czlowiek(self, miejsce)
+        elif typ is Rodzaj.cyberowca:
+            org = CyberOwca(self, miejsce)
         else:
             pass
         if org is not None:
             self.__noweOrganizmy.append(org)
 
     def wczytaj_organizm(self, typ, miejsce, sila, wiek, licznik=None):
-        # TODO uzupełnić resztę organizmów
         org = None
         if typ is Rodzaj.wilk:
             org = Wilk(self, miejsce, sila, wiek)
@@ -131,6 +166,22 @@ class Swiat(object):
             org = Zolw(self, miejsce, sila, wiek)
         elif typ is Rodzaj.lis:
             org = Lis(self, miejsce, sila, wiek)
+        elif typ is Rodzaj.antylopa:
+            org = Antylopa(self, miejsce, sila, wiek)
+        elif typ is Rodzaj.trawa:
+            org = Trawa(self, miejsce, sila, wiek)
+        elif typ is Rodzaj.mlecz:
+            org = Mlecz(self, miejsce, sila, wiek)
+        elif typ is Rodzaj.guarana:
+            org = Guarana(self, miejsce, sila, wiek)
+        elif typ is Rodzaj.jagody:
+            org = WilczeJagody(self, miejsce, sila, wiek)
+        elif typ is Rodzaj.barszcz:
+            org = Sosnowski(self, miejsce, sila, wiek)
+        elif typ is Rodzaj.czlowiek:
+            org = Czlowiek(self, miejsce, sila, wiek, licznik)
+        elif typ is Rodzaj.cyberowca:
+            org = CyberOwca(self, miejsce, sila, wiek)
         else:
             pass
         if org is not None:
@@ -141,8 +192,14 @@ class Swiat(object):
             "wilk": Wilk(self, miejsce),
             "owca": Owca(self, miejsce),
             "zolw": Zolw(self, miejsce),
-            "lis": Lis(self, miejsce)
-            # TODO reszta
+            "lis": Lis(self, miejsce),
+            "antylopa": Antylopa(self, miejsce),
+            "trawa": Trawa(self, miejsce),
+            "mlecz": Mlecz(self, miejsce),
+            "guarana": Guarana(self, miejsce),
+            "wilcze jagody": WilczeJagody(self, miejsce),
+            "barszcz Sosnowskiego": Sosnowski(self, miejsce),
+            "cyber-owca": CyberOwca(self, miejsce)
         }.get(typ, Owca(self, miejsce))
         self.__organizmy.append(org)
 
@@ -173,7 +230,6 @@ class Swiat(object):
         self.__organizmy = [org for org in self.__organizmy if org.get_czy_zyje()]
 
     def rysuj_swiat(self):
-        """TODO"""
         self.__okno.rysuj_organizmy()
         if self.__tura > 0:
             self.__okno.ustaw_komunikaty()
@@ -186,10 +242,6 @@ class Swiat(object):
     def wczytaj_swiat(self, plik):
         """TODO"""
         pass
-
-    """roboczo"""
-    def __repr__(self):
-        return str(self.__kierunek.value)
 
 
 
