@@ -60,3 +60,8 @@ class Czlowiek(Zwierze):
     def rysowanie(self, pole):
         pole.setText("Czlowiek")
         pole.setStyleSheet("background-color: rgb(0, 222, 168);")
+
+    def zapisz_organizm(self):
+        s = self.get_typ().name + " " + str(self._polozenie.x) + " " + str(self._polozenie.y) + " "\
+            + str(self._sila) + " " + str(self._wiek) + " " + str(self._licznik_tarczy)
+        return s

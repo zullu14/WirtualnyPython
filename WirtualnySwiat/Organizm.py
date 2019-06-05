@@ -109,3 +109,8 @@ class Organizm(ABC):
                 y_new -= 1
 
         return Wspolrzedne(x_new, y_new)
+
+    def zapisz_organizm(self):
+        s = self.get_typ().name + " " + str(self._polozenie.x) + " " + str(self._polozenie.y) + " "\
+            + str(self._sila) + " " + str(self._wiek) + " 0"
+        return s

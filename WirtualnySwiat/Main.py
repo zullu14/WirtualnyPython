@@ -2,9 +2,9 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
-from WirtualnySwiat.Swiat import Swiat
+from WirtualnySwiat.grafika.OknoStart import OknoStart
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    swiat = Swiat(12, 12)
+    okno = OknoStart()
     sys.exit(app.exec_())

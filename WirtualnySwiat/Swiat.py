@@ -233,15 +233,52 @@ class Swiat(object):
         self.__okno.rysuj_organizmy()
         if self.__tura > 0:
             self.__okno.ustaw_komunikaty()
+        self.__okno.ustaw_panel_sterowania()
         self.__komunikaty.clear()
 
-    def zapisz_swiat(self, plik):
-        """TODO"""
-        pass
+    def zapisz_swiat(self):
+        """zapis do pliku"""
+        plik = open("swiat.txt", "w+")
+        s = str(self.__rows) + "\n"
+        plik.write(s)
+        s = str(self.__cols) + "\n"
+        plik.write(s)
+        s = str(self.__tura) + "\n"
+        plik.write(s)
+        s = str(len(self.__organizmy)) + "\n"
+        plik.write(s)
+        for org in self.__organizmy:
+            plik.write(org.zapisz_organizm())
+            plik.write("\n")
+        plik.close()
 
-    def wczytaj_swiat(self, plik):
-        """TODO"""
-        pass
+    def wczytaj_swiat(self):
+        """odczyt z pliku"""
+        plik = open("swiat.txt", "r")
+        wys = int(plik.readline())
+        szer = int(plik.readline())
+        tura = int(plik.readline())
+        n = int(plik.readline())
+        if wys > 0 and szer > 0:
+            self.__organizmy.clear()
+            if self.__rows != wys or self.__cols != szer:
+                self.__rows = wys
+                self.__cols = szer
+                self.__okno.reset_planszy()
+            self.__tura = tura
+
+            for i in range(n):
+                typ, x, y, sila, wiek, licz = plik.readline().split()
+                self.wczytaj_organizm(Rodzaj[typ], Wspolrzedne(int(x), int(y)), int(sila), int(wiek), int(licz))
+            self.rysuj_swiat()
+            self.__okno.ustaw_panel_sterowania("Wczytany ostatni zapis z pliku. ")
+            plik.close()
+            return True
+        else:
+            print("Zle wymiary wczytanego swiata!")
+            plik.close()
+            return False
+
 
 
 
