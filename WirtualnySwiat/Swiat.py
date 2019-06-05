@@ -197,9 +197,9 @@ class Swiat(object):
             "trawa": Trawa(self, miejsce),
             "mlecz": Mlecz(self, miejsce),
             "guarana": Guarana(self, miejsce),
-            "wilcze jagody": WilczeJagody(self, miejsce),
-            "barszcz Sosnowskiego": Sosnowski(self, miejsce),
-            "cyber-owca": CyberOwca(self, miejsce)
+            "jagody": WilczeJagody(self, miejsce),
+            "barszcz": Sosnowski(self, miejsce),
+            "cyberowca": CyberOwca(self, miejsce)
         }.get(typ, Owca(self, miejsce))
         self.__organizmy.append(org)
 

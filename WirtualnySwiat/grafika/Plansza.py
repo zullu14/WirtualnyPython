@@ -11,7 +11,7 @@ class Plansza(QGroupBox):
         self.__swiat = swiat
         self.__szer = swiat.get_cols()
         self.__wys = swiat.get_rows()
-        self.__mapa = [[Pole() for j in range(self.__szer)] for i in range(self.__wys)]
+        self.__mapa = [[Pole(swiat, i, j) for j in range(self.__szer)] for i in range(self.__wys)]
         grid_layout = QGridLayout()
 
         for i in range(self.__wys):
